@@ -1,4 +1,5 @@
 from .config import Config
-from .file import FileTree, Zipper
+from .file import Zipper
+from .args_parser import FunctionArgumentsParser
 
-__all__ = ["Config", "FileTree", "Zipper"]
+__all__ = ["Config", "Zipper", "FunctionArgumentsParser"]

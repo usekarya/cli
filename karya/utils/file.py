@@ -54,4 +54,4 @@ class Zipper:
         zip_file.close()
 
 
-__all__ = ["FileTree", "Zipper"]
+__all__ = ["Zipper"]

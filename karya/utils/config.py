@@ -1,5 +1,7 @@
 import json
+from typing import Optional
 import os
+import click
 
 
 class Config:
@@ -16,6 +18,19 @@ class Config:
         config_json[key] = value
 
         json.dump(config_json, open(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE, "w"), indent=4)
+
+    def __get_key(self, key: str) -> Optional[str]:
+        if not os.path.isfile(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE):
+            click.echo("config file not found. Aborting!")
+            exit()
+        config_json = json.load(open(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE, "r"))
+        return config_json[key]
+
+
+    @classmethod
+    def get_auth_key(cls):
+        return cls.__get_key(cls, "auth_key")
+
 
     @classmethod
     def write_auth_key(cls, auth_key: str):
