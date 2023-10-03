@@ -1,6 +1,7 @@
 import json
-from typing import Optional
 import os
+from typing import Optional
+
 import click
 
 
@@ -26,11 +27,9 @@ class Config:
         config_json = json.load(open(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE, "r"))
         return config_json[key]
 
-
     @classmethod
     def get_auth_key(cls):
         return cls.__get_key(cls, "auth_key")
-
 
     @classmethod
     def write_auth_key(cls, auth_key: str):

@@ -1,17 +1,18 @@
 import enum
-import json
-import click
 import importlib
-import os
-from typing import Any, List, _UnionGenericAlias, get_type_hints
 import importlib.util
+import json
+import os
 import sys
+from typing import Any, List, _UnionGenericAlias, get_type_hints
+
+import click
+
 
 class FunctionArgumentsParser:
     def __get_enum_values(self, enum_cls: object) -> List[Any]:
         """Function to get enum values from an enum class"""
         return [member.value for member in enum_cls]
-
 
     def __get_field_type_str(self, field_type: Any) -> str:
         """Function to get a string representation of a field's type"""
@@ -20,7 +21,6 @@ class FunctionArgumentsParser:
         if isinstance(field_type, float):
             return "float"
         return "str"
-
 
     def __dataclass_to_json(self, dataclass_cls: object) -> dict:
         """Function to convert a dataclass to JSON format"""
@@ -53,9 +53,9 @@ class FunctionArgumentsParser:
             )
 
         return {"params": params}
-    
+
     def find_and_get_json(self):
-        file_names = [file_name for file_name in os.listdir('.') if os.path.isfile(file_name)]
+        file_names = [file_name for file_name in os.listdir(".") if os.path.isfile(file_name)]
 
         args_json = {}
 
@@ -78,5 +78,5 @@ class FunctionArgumentsParser:
         with open("args.json", "w") as file:
             json.dump(args_json, file, indent=4)
         click.echo("Created args.json")
-        
+
         return args_json
