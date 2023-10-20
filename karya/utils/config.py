@@ -32,6 +32,10 @@ class Config:
         return cls.__get_key(cls, "auth_key")
 
     @classmethod
+    def get_base_url(cls):
+        return cls.__get_key(cls, "base_url")
+
+    @classmethod
     def write_auth_key(cls, auth_key: str):
         cls.__write_key(cls, "auth_key", auth_key)
 

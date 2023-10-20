@@ -3,8 +3,12 @@ import secrets
 import string
 import zipfile
 from typing import List
+import requests
 
 import pathspec
+import yaml
+
+from .config import Config
 
 
 class FileTree:
@@ -52,6 +56,28 @@ class Zipper:
             zip_file.write(file_path)
 
         zip_file.close()
+
+    def upload_zip(self):
+        config = None
+        # input_params
+        with open("config.yaml", "r") as file:
+            config = yaml.load(file, Loader=yaml.Loader)
+
+        base_url = Config.get_base_url()
+
+        payload = {
+            'config': config,
+            'input_params': '{"key": "1"}'
+        }
+        files=[
+            ('file',('logo.svg', open('/Users/uditjuneja/open-nu/logo.svg','rb'), 'zip'))
+        ]
+        headers = {
+        'X-Api-Key': 'user_api_key_1696903190Wz2hDvtWXfxlYEVeD3Br2EOE5'
+        }
+
+        response = requests.request("POST", base_url, headers=headers, data=payload, files=files)
+        
 
 
 __all__ = ["Zipper"]

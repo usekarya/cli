@@ -73,4 +73,7 @@ def deploy():
     zipper = Zipper()
     zipper.zip_files()
 
+    click.echo(f"uploading files")
+    zipper.upload_zip()
+
     print("Done")
