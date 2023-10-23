@@ -1,11 +1,12 @@
+import json
 import os
 import secrets
 import string
 import zipfile
 from typing import List
-import requests
 
 import pathspec
+import requests
 import yaml
 
 from .config import Config
@@ -59,25 +60,22 @@ class Zipper:
 
     def upload_zip(self):
         config = None
+        input_params = None
         # input_params
         with open("config.yaml", "r") as file:
             config = yaml.load(file, Loader=yaml.Loader)
+        if os.path.exists("args.json"):
+            with open("args.json", "r") as file:
+                input_params = json.load(file)
 
         base_url = Config.get_base_url()
+        auth_key = Config.get_auth_key()
 
-        payload = {
-            'config': config,
-            'input_params': '{"key": "1"}'
-        }
-        files=[
-            ('file',('logo.svg', open('/Users/uditjuneja/open-nu/logo.svg','rb'), 'zip'))
-        ]
-        headers = {
-        'X-Api-Key': 'user_api_key_1696903190Wz2hDvtWXfxlYEVeD3Br2EOE5'
-        }
+        payload = {"config": config, "input_params": input_params}
+        files = [("file", ("code.zip", open(self.ZIP_BASE_DIRECTORY + self.zip_file_name, "rb"), "zip"))]
+        headers = {"X-Api-Key": auth_key}
 
         response = requests.request("POST", base_url, headers=headers, data=payload, files=files)
-        
 
 
 __all__ = ["Zipper"]
