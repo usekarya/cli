@@ -34,7 +34,7 @@ class FileTree:
         self.spec = pathspec.PathSpec.from_lines(pathspec.patterns.GitWildMatchPattern, spec_text.splitlines())
 
     def get_tree(self) -> List[str]:
-        return [file_path for file_path in self.spec.match_tree("./", negate=True)]
+        return list(self.spec.match_tree("./", negate=True))
 
 
 class Zipper:
@@ -43,7 +43,7 @@ class Zipper:
     def __init__(self):
         self.file_paths: List[str] = FileTree().get_tree()
         self.zip_file_name: str = (
-            f"open_nu_zip_"
+            "open_nu_zip_"
             + "".join(
                 [secrets.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(5)]
             )
@@ -75,7 +75,7 @@ class Zipper:
         files = [("file", ("code.zip", open(self.ZIP_BASE_DIRECTORY + self.zip_file_name, "rb"), "zip"))]
         headers = {"X-Api-Key": auth_key}
 
-        response = requests.request("POST", base_url, headers=headers, data=payload, files=files)
+        requests.request("POST", base_url, headers=headers, data=payload, files=files)
 
 
 __all__ = ["Zipper"]

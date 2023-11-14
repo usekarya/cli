@@ -64,10 +64,9 @@ def init(name):
 def deploy():
     click.echo(f"Deploy new function")
 
-    auth_key = Config.get_auth_key()
 
     click.echo("Parsing args")
-    args_json = FunctionArgumentsParser().find_and_get_json()
+    _ = FunctionArgumentsParser().find_and_get_json()
 
     click.echo(f"Zipping files")
     zipper = Zipper()

@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from typing import Optional
 
 import click
@@ -23,7 +24,7 @@ class Config:
     def __get_key(self, key: str) -> Optional[str]:
         if not os.path.isfile(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE):
             click.echo("config file not found. Aborting!")
-            exit()
+            sys.exit()
         config_json = json.load(open(self.CONFIG_FILE_BASE_PATH + self.CONFIG_FILE, "r"))
         return config_json[key]
 

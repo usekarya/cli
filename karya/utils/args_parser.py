@@ -16,10 +16,12 @@ class FunctionArgumentsParser:
 
     def __get_field_type_str(self, field_type: Any) -> str:
         """Function to get a string representation of a field's type"""
-        if isinstance(field_type, int):
+        if field_type == int:
             return "int"
-        if isinstance(field_type, float):
+        if field_type == float:
             return "float"
+        if field_type == bool:
+            return "bool"
         return "str"
 
     def __dataclass_to_json(self, dataclass_cls: object) -> dict:
@@ -51,7 +53,6 @@ class FunctionArgumentsParser:
                     "values": values,
                 }
             )
-
         return {"params": params}
 
     def find_and_get_json(self):
@@ -69,7 +70,7 @@ class FunctionArgumentsParser:
                 spec.loader.exec_module(args)
             except Exception as e:
                 click.echo(f"unable to import args.py. aborting + {e}")
-                exit()
+                sys.exit()
 
             click.echo("Found args.py")
             args_json = self.__dataclass_to_json(args.FunctionArguments)
